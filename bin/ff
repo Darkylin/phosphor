@@ -1,0 +1,46 @@
+#! /usr/bin/env node
+'use strict';
+
+const program = require('commander');
+const _ = require('lodash');
+const commands = require('./commands');
+const appConfig = require('../package.json');
+
+// 版本号
+program
+  .version(appConfig.version);
+
+// 添加命令
+_.forIn(commands, function (config, name) {
+  program
+    .command(name, config.description);
+})
+
+const argv = process.argv;
+
+// 对于alias命令进行转换
+const cmd = argv[2];
+const cmdFromAlias = _.findKey(commands, function (o) {
+  const alias = o.alias;
+  if (_.isArray(alias)) {
+    return alias.some(function (name) {
+      return name === cmd;
+    })
+  }
+  return alias === cmd;
+})
+if (cmdFromAlias) {
+  argv[2] = cmdFromAlias;
+}
+//program.on('--help', function () {
+//  console.log('🌟🌟🌟 phorsphor 启明星 🌟🌟🌟');
+//});
+
+
+program.parse(argv);
+if (!program.args.length) {
+  program.help();
+  process.exit(0);
+}
+
+//const exec = require('../lib/exec');
