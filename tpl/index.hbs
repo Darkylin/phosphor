@@ -6,11 +6,19 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Demo</title>
+    {{beforeLink}}
+    {{afterLink}}
 </head>
 <body>
-<div id="main"></div>
+{{#if body}}
+    {{body}}
+{{else}}
+    <div id="main"></div>
+{{/if}}
+{{beforeScript}}
 {{#each scripts}}
     <script src="{{this}}"></script>
 {{/each}}
+{{afterScript}}
 </body>
 </html>

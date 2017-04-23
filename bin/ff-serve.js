@@ -1,7 +1,7 @@
 'use strict';
 const options = require('./options');
 const program = require('commander');
-const context = require('../lib/context');
+const context = require('../lib/ff-context');
 const getWebpackConfig = require('../lib/config');
 const printConfig = require('../lib/util/printWebpackConfig');
 const path = require('path');
